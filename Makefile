@@ -1,6 +1,6 @@
 mpi = mpic++
 c++ = g++
-utils =  main.cpp utils/ParagraphPiece/ParagraphPiece.cpp  utils/TextProcessor/TextProcessor.cpp
+utils =  main.cpp utils/ParagraphPiece/ParagraphPiece.cpp  utils/TextProcessor/TextProcessor.cpp utils/ParagraphTools/ParagraphTool.cpp utils/ConcurrentMemory/ConcurrentMemory.cpp
 
 all: main
 
