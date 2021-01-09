@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <algorithm> 
 #include "../ParagraphPiece/ParagraphPiece.h"
 #include "../Defines.h"
 
@@ -14,6 +15,9 @@ public:
     TextProcessor();
     ~TextProcessor();
 
+    string processWordAsFantasy(string);
+    string processWordAsSF(string);
+    bool isValidWord(string);
     ParagraphPiece processPiece(ParagraphPiece);
     ParagraphPiece processAsHorror(ParagraphPiece);
     ParagraphPiece processAsSF(ParagraphPiece);
