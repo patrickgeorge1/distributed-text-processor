@@ -18,11 +18,12 @@ public:
     string processWordAsFantasy(string);
     string processWordAsSF(string);
     bool isValidWord(string);
-    ParagraphPiece * processPiece(ParagraphPiece *);
-    ParagraphPiece processAsHorror(ParagraphPiece);
-    ParagraphPiece processAsSF(ParagraphPiece);
-    ParagraphPiece processAsFantasy(ParagraphPiece);
-    ParagraphPiece processAsComedy(ParagraphPiece);
+
+    void processPiece(ParagraphPiece &);
+    void processAsHorror(ParagraphPiece &);
+    void processAsSF(ParagraphPiece &);
+    void processAsFantasy(ParagraphPiece &);
+    void processAsComedy(ParagraphPiece &);
 };
 
 

@@ -29,7 +29,6 @@ string TextProcessor::processWordAsSF(string s) {
     string word;
     string processed_lines = "";
     int counter = 0;
-    cout << s << endl;
 
     while ((pos = s.find(delimiter)) != std::string::npos && counter < 6)
     {
@@ -54,7 +53,7 @@ string TextProcessor::processWordAsSF(string s) {
     return processed_lines;
 }
 
-ParagraphPiece TextProcessor::processAsHorror(ParagraphPiece p) {
+void TextProcessor::processAsHorror(ParagraphPiece& p) {
     string lines = p.getLines();
     string processed_lines = "";
     string consonants = "QZWSXDCRFVTGBYHNJMKLPqzwsxdcrfvtgbyhnjmklp";
@@ -69,11 +68,10 @@ ParagraphPiece TextProcessor::processAsHorror(ParagraphPiece p) {
         }
     }
     p.setLines(processed_lines);
-    return p;
 }
 
 
-ParagraphPiece TextProcessor::processAsSF(ParagraphPiece p){
+void TextProcessor::processAsSF(ParagraphPiece& p){
     string s = p.getLines();
     string delimiter = "\n";
     size_t pos = 0;
@@ -90,14 +88,12 @@ ParagraphPiece TextProcessor::processAsSF(ParagraphPiece p){
         s.erase(0, pos + delimiter.length());
     }
     processed_lines += processWordAsSF(s);
-
     p.setLines(processed_lines);
-    return p;
 }
 
 
 
-ParagraphPiece TextProcessor::processAsComedy(ParagraphPiece p){
+void TextProcessor::processAsComedy(ParagraphPiece& p){
     string processed_lines = "";
     string lines = p.getLines();
     int counter = 0;
@@ -117,12 +113,10 @@ ParagraphPiece TextProcessor::processAsComedy(ParagraphPiece p){
         }
         processed_lines += c;
     }
-
     p.setLines(processed_lines);
-    return p;  
 }
 
-ParagraphPiece TextProcessor::processAsFantasy(ParagraphPiece p){
+void TextProcessor::processAsFantasy(ParagraphPiece& p){
     string s = p.getLines();
     string delimiter = " ";
     size_t pos = 0;
@@ -137,29 +131,26 @@ ParagraphPiece TextProcessor::processAsFantasy(ParagraphPiece p){
         s.erase(0, pos + delimiter.length());
     }
     processed_lines += processWordAsFantasy(s);
-
-
     p.setLines(processed_lines);
-    return p;   
 }
 
-ParagraphPiece TextProcessor::processPiece(ParagraphPiece p) {
+void TextProcessor::processPiece(ParagraphPiece& p) {
     switch (p.getGenre())
     {
     case GENRE_HORROR:
-        return processAsHorror(p);
+        processAsHorror(p);
         break;
 
     case GENRE_SF:
-        return processAsSF(p);
+        processAsSF(p);
         break;
 
     case GENRE_COMEDY:
-        return processAsComedy(p);
+        processAsComedy(p);
         break;
 
     case GENRE_FANTASY:
-        return processAsFantasy(p);
+        processAsFantasy(p);
         break;
     
     default:
