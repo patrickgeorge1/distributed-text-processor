@@ -1,6 +1,14 @@
 mpi = mpic++
+c++ = g++
+utils =  main.cpp utils/ParagraphPiece/ParagraphPiece.cpp  utils/TextProcessor/TextProcessor.cpp
 
 all: main
+
+build: $(utils)
+	$(c++) $(utils) -o main 
+
+test:
+	./main
 
 main: main.cpp
 	$(mpi) $< -o $@
