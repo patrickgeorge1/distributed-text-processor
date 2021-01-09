@@ -18,7 +18,7 @@ public:
     string processWordAsFantasy(string);
     string processWordAsSF(string);
     bool isValidWord(string);
-    ParagraphPiece processPiece(ParagraphPiece);
+    ParagraphPiece * processPiece(ParagraphPiece *);
     ParagraphPiece processAsHorror(ParagraphPiece);
     ParagraphPiece processAsSF(ParagraphPiece);
     ParagraphPiece processAsFantasy(ParagraphPiece);
