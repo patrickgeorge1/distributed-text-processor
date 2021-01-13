@@ -5,7 +5,7 @@ utils =  main.cpp utils/ParagraphPiece/ParagraphPiece.cpp  utils/TextProcessor/T
 all: main
 
 build: $(utils)
-	$(c++) $(utils) -o main 
+	$(c++) $(utils) -pthread -o main 
 
 test:
 	./main

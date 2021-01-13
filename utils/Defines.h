@@ -4,3 +4,4 @@
 #define GENRE_SF 1
 #define GENRE_FANTASY 2
 #define GENRE_COMEDY 3
+#define GENRE_STOP -1

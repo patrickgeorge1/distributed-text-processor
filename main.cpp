@@ -1,35 +1,57 @@
 #include <iostream>
+#include <thread>
 #include "utils/TextProcessor/TextProcessor.h"
 #include "utils/ParagraphPiece/ParagraphPiece.h"
 #include "utils/ParagraphTools/ParagraphTool.h"
 #include "utils/ConcurrentMemory/ConcurrentMemory.h"
+#include "utils/Defines.h"
 
 using namespace std;
 
+ConcurrentMemory * cm;
 
-int main(int argc, char** argv) {
-    TextProcessor tp;
-    ParagraphPiece * p1 = new ParagraphPiece(1, 1, 3, "Salut sunt Andy, toata lumea ma cunoaste bai bro !\n Si ce daca rad, si ce daca plang a ?");
-    ParagraphPiece * p2 = new ParagraphPiece(1, 1, 2, "Hello sanky, montana mistere");
-    ParagraphPiece * p3 = new ParagraphPiece(1, 1, 1, "Au innebunit salcamii !");
-    ConcurrentMemory * cm = new ConcurrentMemory(3);
-    cm->pushPieceToThread(1, p1);
-    cm->pushPieceToThread(1, p2);
-    cm->pushPieceToThread(2, p3);
+void wokerDo(int id) {
 
-    cout << cm->getNumberOfPiecesFromThread(0) << endl;
-    cout << cm->getNumberOfPiecesFromThread(1) << endl;
-    cout << cm->getNumberOfPiecesFromThread(2) << endl;
-    cout << endl;
+    while (true)
+    {
+        ParagraphPiece * p = cm->getTask();
+        if (p->getGenre() == GENRE_STOP) break;
 
-    cout << cm->getNextPieceForThread(1)->getLines() << endl; cm->removePieceFromThread(1);
-    cout << cm->getNextPieceForThread(1)->getLines() << endl;
-    cout << cm->getNextPieceForThread(2)->getLines() << endl;
-    cout << endl;
+        // worker job
+        printf("worker[%d] working on %s\n", id, p->getLines().c_str());
+        
+    }
+    pthread_exit(NULL);
+}
 
-    ParagraphPiece * test = cm->getNextPieceForThread(2);
-    tp.processPiece(*test);
-    cout << test->getLines() << endl;
+void mainDo(int id) {
+    for (int i = 0; i < 100; i++)
+    {
+        string ceva = "task" + to_string(i);
+        ParagraphPiece* p = new ParagraphPiece(1, i, i % 2, ceva);
+        cm->addTask(p);
+    }
+    
 
+    cm->sendEndRequestToSecondartTasks();
+
+    pthread_exit(NULL);
+}
+
+
+int main(int argc, char** argv) {  
+    cm = new ConcurrentMemory(3);
+    
+    thread main(mainDo, 0);
+    thread worker1(wokerDo, 1);
+    thread worker2(wokerDo, 2);
+    thread worker3(wokerDo, 3);
+
+    main.join();
+    worker1.join();
+    worker2.join();
+    worker3.join();
+
+    cout << "The end." << endl;
     return 0;
 }
