@@ -25,6 +25,7 @@ void ConcurrentMemory::addTask(ParagraphPiece * p) {
         piecesNumber[p->getIdParagraph()] = 0;
     } 
     piecesNumber[p->getIdParagraph()]++;
+
     ul.unlock();
     cv.notify_one();
 }
@@ -40,7 +41,7 @@ ParagraphPiece * ConcurrentMemory::getTask() {
 
 /* after a task was processed, decrese paragraph batch number and add processed
       paragraph batch to map to collect later     */
-void ConcurrentMemory::markCompletedTask(ParagraphPiece * p) {
+void ConcurrentMemory::markCompletedTask(ParagraphPiece* p) {
     unique_lock<mutex> ul(m);
     int paragraph = p->getIdParagraph();
     if (paragraphPieces.find(paragraph) == paragraphPieces.end())
@@ -55,8 +56,10 @@ void ConcurrentMemory::markCompletedTask(ParagraphPiece * p) {
 void ConcurrentMemory::sendEndRequestToSecondartTasks() {
     for (int i = 0; i < threads_number; i++)
     {
-        addTask(new ParagraphPiece(0, 0, -1, ""));
+        addTask(new ParagraphPiece(-1, -1, -1, ""));
     }
+    unique_lock<mutex> ul(m);
+    piecesNumber.erase(-1);
 }
 
 // get and remove the most recently finished paragraph indices
@@ -79,7 +82,11 @@ queue<int> ConcurrentMemory::getProcessedTasks() {
     }
     return finishedParagraphs;
 }
-    
+
+bool ConcurrentMemory::allTasksWereProcessed() {
+    return (piecesNumber.size() == 0);
+}
+
 
 // void ConcurrentMemory::pushPieceToThread(int thread_id, ParagraphPiece * piece) {
 //     this->queues[thread_id].push(piece);

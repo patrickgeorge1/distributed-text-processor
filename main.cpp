@@ -5,10 +5,13 @@
 #include "utils/ParagraphTools/ParagraphTool.h"
 #include "utils/ConcurrentMemory/ConcurrentMemory.h"
 #include "utils/Defines.h"
+#include <unistd.h>
+
 
 using namespace std;
 
-ConcurrentMemory * cm;
+static ConcurrentMemory * cm;
+static TextProcessor * tp = new TextProcessor();
 
 void wokerDo(int id) {
 
@@ -18,23 +21,24 @@ void wokerDo(int id) {
         if (p->getGenre() == GENRE_STOP) break;
 
         // worker job
-        printf("worker[%d] working on %s\n", id, p->getLines().c_str());
-        
+        tp->processPiece(*p);
+        cm->markCompletedTask(p);
     }
     pthread_exit(NULL);
 }
+
 
 void mainDo(int id) {
     for (int i = 0; i < 100; i++)
     {
         string ceva = "task" + to_string(i);
-        ParagraphPiece* p = new ParagraphPiece(1, i, i % 2, ceva);
+        ParagraphPiece* p = new ParagraphPiece(i, 1, i % 3, ceva);
         cm->addTask(p);
     }
-    
-
     cm->sendEndRequestToSecondartTasks();
+    sleep(3);
 
+    cm->getProcessedTasks();
     pthread_exit(NULL);
 }
 
