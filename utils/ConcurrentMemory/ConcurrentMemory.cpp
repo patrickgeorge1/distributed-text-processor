@@ -87,6 +87,23 @@ bool ConcurrentMemory::allTasksWereProcessed() {
     return (piecesNumber.size() == 0);
 }
 
+void ConcurrentMemory::assemble() {
+    for(std::map<int ,map<int, ParagraphPiece *>>::iterator iter = paragraphPieces.begin(); iter != paragraphPieces.end(); ++iter)
+    {
+        int paragraph =  iter->first;
+        map<int, ParagraphPiece *> pieces = iter->second;
+        int picesNo = piecesNumber[paragraph];
+
+        ParagraphPiece* p = pieces[0];
+        for (int i = 1; i < picesNo; i++)
+        {
+            ParagraphPiece *aux = pieces[i];
+            p->setLines(p->getLines() + aux->getLines());
+        }
+        paragraphs[paragraph] = p;
+    }
+}
+
 
 // void ConcurrentMemory::pushPieceToThread(int thread_id, ParagraphPiece * piece) {
 //     this->queues[thread_id].push(piece);

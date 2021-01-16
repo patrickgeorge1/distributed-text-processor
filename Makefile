@@ -10,11 +10,11 @@ build: $(utils)
 test:
 	./main
 
-main: main.cpp
-	$(mpi) $< -o $@
+main:
+	$(mpi) $(utils) -o $@
 
 run: main
-	mpirun -oversubscribe -np 5 ./$@ ./tests/in/input1.txt
+	mpirun -oversubscribe -np 5 ./main tests/in/input1.txt 7
 
 .PHONY: clean
 clean:

@@ -23,6 +23,7 @@ public:
     queue<ParagraphPiece *> taskPool;
     map<int, map<int, ParagraphPiece *>> paragraphPieces;
     map<int, int> piecesNumber;
+    map<int, ParagraphPiece *> paragraphs;
 
     void addTask(ParagraphPiece *);
     ParagraphPiece * getTask();
