@@ -8,6 +8,8 @@ ParagraphPiece::ParagraphPiece(int id, int id_paragraph, int genre, string lines
     this->lines = lines;
 }
 
+ParagraphPiece::ParagraphPiece() {}
+
 ParagraphPiece::~ParagraphPiece()
 {
 }

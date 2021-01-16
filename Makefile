@@ -1,11 +1,11 @@
 mpi = mpic++
 c++ = g++
-utils =  main.cpp utils/ParagraphPiece/ParagraphPiece.cpp  utils/TextProcessor/TextProcessor.cpp utils/ParagraphTools/ParagraphTool.cpp utils/ConcurrentMemory/ConcurrentMemory.cpp
+utils =  main.cpp utils/ParagraphPiece/ParagraphPiece.cpp  utils/TextProcessor/TextProcessor.cpp utils/ParagraphTools/ParagraphTool.cpp utils/ConcurrentMemory/ConcurrentMemory.cpp utils/InputParser/InputParser.cpp
 
 all: main
 
 build: $(utils)
-	$(c++) $(utils) -pthread -o main 
+	$(c++) $(utils) -pthread -o main -g
 
 test:
 	./main

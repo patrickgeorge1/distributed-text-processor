@@ -14,6 +14,7 @@ private:
 
 public:
     ParagraphPiece(int, int, int, string);
+    ParagraphPiece();
     ~ParagraphPiece();
 
     int getGenre();

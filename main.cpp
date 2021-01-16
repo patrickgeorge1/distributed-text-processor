@@ -4,6 +4,7 @@
 #include "utils/ParagraphPiece/ParagraphPiece.h"
 #include "utils/ParagraphTools/ParagraphTool.h"
 #include "utils/ConcurrentMemory/ConcurrentMemory.h"
+#include "utils/InputParser/InputParser.h"
 #include "utils/Defines.h"
 #include <unistd.h>
 
@@ -44,17 +45,20 @@ void mainDo(int id) {
 
 
 int main(int argc, char** argv) {  
-    cm = new ConcurrentMemory(3);
+    // cm = new ConcurrentMemory(3);
     
-    thread main(mainDo, 0);
-    thread worker1(wokerDo, 1);
-    thread worker2(wokerDo, 2);
-    thread worker3(wokerDo, 3);
+    // thread main(mainDo, 0);
+    // thread worker1(wokerDo, 1);
+    // thread worker2(wokerDo, 2);
+    // thread worker3(wokerDo, 3);
 
-    main.join();
-    worker1.join();
-    worker2.join();
-    worker3.join();
+    // main.join();
+    // worker1.join();
+    // worker2.join();
+    // worker3.join();
+
+    InputParser ip("./tests/in/input2.txt", GENRE_SF);
+    ip.parseInput();
 
     cout << "The end." << endl;
     return 0;
