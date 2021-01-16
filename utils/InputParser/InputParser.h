@@ -18,7 +18,7 @@ public:
     ~InputParser();
 
     static int getGenreByType(string);
-    void parseInput();
+    int parseInput();
 
     void send(ParagraphPiece p) {
         cout << "{ p" << p.getIdParagraph() << "b" << p.getId() << endl << p.getLines() << endl << "}" << endl;

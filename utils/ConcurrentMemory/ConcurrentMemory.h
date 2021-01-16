@@ -30,6 +30,7 @@ public:
     void sendEndRequestToSecondartTasks();
     bool allTasksWereProcessed();
     queue<int> getProcessedTasks();
+    void assemble();
 
     // vector<queue<ParagraphPiece *>> queues;
     // bool execution_ended;

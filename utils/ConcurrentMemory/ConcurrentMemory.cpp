@@ -49,7 +49,7 @@ void ConcurrentMemory::markCompletedTask(ParagraphPiece* p) {
         paragraphPieces[paragraph] = map<int, ParagraphPiece *>();
     }
     paragraphPieces[paragraph][p->getId()] = p;
-    piecesNumber[paragraph]--;
+    // piecesNumber[paragraph]--;
 }
 
 // send task that will end the worker threads

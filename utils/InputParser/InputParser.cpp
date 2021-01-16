@@ -20,7 +20,7 @@ int InputParser::getGenreByType(string type) {
     return GENRE_NOT_FOUND;
 }
 
-void InputParser::parseInput() {
+int InputParser::parseInput() {
     ifstream File(this->filename);
     string line;
 
@@ -87,5 +87,6 @@ void InputParser::parseInput() {
     }
 
     File.close();
+    return paragraph_no;
 }
 
